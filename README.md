@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# DIO Shopping - Frontend
+
+Bootcamp Impulso Javascript Evolution desenvolvido pela [Digital Innovation One](https://web.dio.me).
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
