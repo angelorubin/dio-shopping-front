@@ -1,17 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Typography, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Cart from "./cart";
 
 const Header = () => {
 	return (
-		<Grid
-			container
-			direction="row"
-			justify="space-between"
-			alignItems="center"
-			xs={12}
-		>
+		<Box>
 			<Typography variant="h3">Dio Shopping</Typography>
 			<Link to="/">
 				<Button color="primary">Home</Button>
@@ -20,7 +14,7 @@ const Header = () => {
 				<Button color="primary">Contato</Button>
 			</Link>
 			<Cart />
-		</Grid>
+		</Box>
 	);
 };
 

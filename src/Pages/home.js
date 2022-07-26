@@ -1,11 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Paper, Grid, Typography, List, makeStyles } from "@mui/material";
+import { Paper, Box, Typography, List, useTheme } from "@mui/material";
 import Item from "components/item";
 import Card from "components/card";
 
-const HomePage = () => {
+const Home = () => {
+	const theme = useTheme();
+	const { palette } = theme;
+
 	const products = useSelector((state) => state.products);
+
+	const nameCategories = Object.keys(products);
 
 	const categories = products.map((category) => {
 		const container = {};
@@ -32,12 +37,19 @@ const HomePage = () => {
 	}
 
 	return (
-		<Grid sx={{ display: "flex" }}>
-			<Grid>
+		<Box
+			sx={{
+				display: "flex",
+				gap: "1rem",
+				border: (theme) => `2px solid ${palette.primary.main}`,
+			}}
+		>
+			<Box sx={{ border: "2px solid red" }}>
 				<Paper>
 					<Typography variant="h5">Categorias</Typography>
+					<pre>{JSON.stringify(nameCategories, null, 2)}</pre>
 					<List>
-						{category.map((category) => {
+						{[].map((category) => {
 							return (
 								<Item
 									key={category.id}
@@ -48,8 +60,9 @@ const HomePage = () => {
 						})}
 					</List>
 				</Paper>
-			</Grid>
-			<Grid sx={{ display: "flex", gap: "1rem", flexFlow: "row wrap" }}>
+			</Box>
+
+			<Box sx={{ display: "flex", gap: "1rem", flexFlow: "row wrap" }}>
 				{products.map((item) => {
 					return (
 						<Card key={item.id_product} product={item}>
@@ -57,9 +70,9 @@ const HomePage = () => {
 						</Card>
 					);
 				})}
-			</Grid>
-		</Grid>
+			</Box>
+		</Box>
 	);
 };
 
-export default HomePage;
+export default Home;

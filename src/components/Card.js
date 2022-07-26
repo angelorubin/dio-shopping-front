@@ -3,7 +3,7 @@ import { Paper, Grid, Typography, Button, makeStyles } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import cartActions from "components/store/actions/cart";
 
-export default function Card({ product, children }) {
+export default ({ product, children }) => {
 	const cart = useSelector((state) => state.cart.value);
 	const dispatch = useDispatch();
 
@@ -29,4 +29,4 @@ export default function Card({ product, children }) {
 			</Paper>
 		</Grid>
 	);
-}
+};
