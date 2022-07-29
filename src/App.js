@@ -4,7 +4,7 @@ import Header from "components/header";
 import store from "components/store";
 import Routes from "routes";
 import { Container, CssBaseline, ThemeProvider } from "@mui/material";
-import { theme } from "themes/default";
+import { dio } from "themes/dio";
 
 const App = () => {
 	const localCart = JSON.parse(localStorage.getItem("dioshopping: cart"));
@@ -14,15 +14,13 @@ const App = () => {
 	}
 
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={dio}>
 			<Provider store={store}>
-				<Container>
-					<CssBaseline />
-					<Router>
-						<Header />
-						<Routes />
-					</Router>
-				</Container>
+				<CssBaseline />
+				<Router>
+					<Header />
+					<Routes />
+				</Router>
 			</Provider>
 		</ThemeProvider>
 	);
