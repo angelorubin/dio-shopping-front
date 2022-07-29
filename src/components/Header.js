@@ -24,6 +24,7 @@ const Header = () => {
 					Dio Shopping
 				</Typography>
 			</Box>
+
 			<Box
 				sx={{
 					display: "flex",
@@ -49,9 +50,9 @@ const Header = () => {
 					<Typography>Contato</Typography>
 				</MuiLink>
 			</Box>
+
 			<Box
 				sx={{
-					border: `1px solid ${common.white}`,
 					flex: 1,
 					justifyContent: "flex-end",
 				}}

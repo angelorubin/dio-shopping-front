@@ -1,15 +1,16 @@
 import React from "react";
+import { Box, Badge, useTheme } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import cartActions from "components/store/actions/cart";
-import { Box, Button } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Icon } from "components/icon";
 
 const Cart = () => {
 	const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const theme = useTheme();
-	const { common, palette } = theme;
-	const { primary, secondary } = palette;
+	const { palette, spacing } = theme;
+	const { common, primary, secondary } = palette;
 
 	let totalPrice = 0;
 
@@ -22,24 +23,22 @@ const Cart = () => {
 	}
 
 	return (
-		<Box>
-			<Button
-				sx={{ backgroundColor: secondary.main }}
-				type="button"
-				className="btn btn-info"
-				data-bs-toggle="modal"
-				data-bs-target="#CartModal"
-			>
-				<span>
-					<i className="fas fa-shopping-cart"></i>
-				</span>
-				<span className="badge rounded-pill bg-info text-dark">
-					{cart.value}
-				</span>
-			</Button>
+		<>
+			<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+				<Badge
+					color="success"
+					badgeContent={cart.value}
+					data-bs-toggle="modal"
+					data-bs-target="#CartModal"
+				>
+					<Icon size="1.5rem" color={common.white}>
+						<AiOutlineShoppingCart />
+					</Icon>
+				</Badge>
+			</Box>
 
 			{/* Modal */}
-			<div
+			<Box
 				className="modal fade"
 				id="CartModal"
 				tabIndex="-1"
@@ -149,8 +148,8 @@ const Cart = () => {
 						</div>
 					</div>
 				</div>
-			</div>
-		</Box>
+			</Box>
+		</>
 	);
 };
 
