@@ -9,7 +9,6 @@ const Home = () => {
 	const { palette, spacing } = theme;
 
 	const products = useSelector((state) => state.products);
-	// console.log(products);
 
 	const getCategoryNames = (products) => {
 		const names = products.map((product) => product.name_categorys);
@@ -52,12 +51,16 @@ const Home = () => {
 			}}
 		>
 			<Box
-				sx={{ display: "flex", flexDirection: "column", padding: spacing(2) }}
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					padding: spacing(2),
+				}}
 			>
 				<Typography sx={{ fontWeight: "900" }} variant="h5">
 					Categorias
 				</Typography>
-				<Stack sx={{ width: "20vh" }}>
+				<Stack sx={{ width: "20vh", marginTop: spacing(2) }}>
 					{getCategoryNames(products).map((category, index) => {
 						return (
 							<Item key={index} name={category} details={count[category]} />
@@ -78,7 +81,7 @@ const Home = () => {
 					sx={{
 						display: "flex",
 						flexFlow: "row wrap",
-
+						marginTop: spacing(2),
 						gap: spacing(10),
 					}}
 				>
