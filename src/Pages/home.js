@@ -1,16 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Paper, Box, Typography, List, useTheme } from "@mui/material";
+import { Provider, useSelector } from "react-redux";
+import { Paper, Box, Typography, List, useTheme, Stack } from "@mui/material";
 import Item from "components/item";
 import Card from "components/card";
 
 const Home = () => {
 	const theme = useTheme();
-	const { palette } = theme;
+	const { palette, spacing } = theme;
 
 	const products = useSelector((state) => state.products);
+	// console.log(products);
 
-	const nameCategories = Object.keys(products);
+	const getCategoryNames = (products) => {
+		const names = products.map((product) => product.name_categorys);
+
+		const uniq = [...new Set(names)];
+
+		return uniq;
+	};
 
 	const categories = products.map((category) => {
 		const container = {};
@@ -26,7 +33,8 @@ const Home = () => {
 		})
 		.map(JSON.parse);
 
-	const arrayCategory = categories.map((category) => category.name);
+	const arrayCategory = products.map((category) => category.name);
+
 	let count = {};
 
 	for (let i = 0; i < arrayCategory.length; i++) {
@@ -41,35 +49,47 @@ const Home = () => {
 			sx={{
 				display: "flex",
 				gap: "1rem",
-				border: (theme) => `2px solid ${palette.primary.main}`,
 			}}
 		>
-			<Box sx={{ border: "2px solid red" }}>
-				<Paper>
-					<Typography variant="h5">Categorias</Typography>
-					<pre>{JSON.stringify(nameCategories, null, 2)}</pre>
-					<List>
-						{[].map((category) => {
-							return (
-								<Item
-									key={category.id}
-									name={category.name}
-									details={count[category.name]}
-								/>
-							);
-						})}
-					</List>
-				</Paper>
+			<Box
+				sx={{ display: "flex", flexDirection: "column", padding: spacing(2) }}
+			>
+				<Typography sx={{ fontWeight: "900" }} variant="h5">
+					Categorias
+				</Typography>
+				<Stack sx={{ width: "20vh" }}>
+					{getCategoryNames(products).map((category, index) => {
+						return (
+							<Item key={index} name={category} details={count[category]} />
+						);
+					})}
+				</Stack>
 			</Box>
 
-			<Box sx={{ display: "flex", gap: "1rem", flexFlow: "row wrap" }}>
-				{products.map((item) => {
-					return (
-						<Card key={item.id_product} product={item}>
-							{item.name_product}
-						</Card>
-					);
-				})}
+			<Box
+				sx={{
+					display: "flex",
+					gap: "1rem",
+					flexFlow: "row wrap",
+					padding: spacing(2),
+				}}
+			>
+				<Box
+					sx={{
+						display: "flex",
+						flexFlow: "row wrap",
+
+						gap: spacing(10),
+					}}
+				>
+					{products.map((item) => {
+						return (
+							<Card key={item.id_product} product={item}>
+								{item.name_product}
+							</Card>
+						);
+					})}
+				</Box>
 			</Box>
 		</Box>
 	);

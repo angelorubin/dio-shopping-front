@@ -1,10 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import cartActions from "components/store/actions/cart";
+import { Box, Button } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 const Cart = () => {
 	const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
+	const theme = useTheme();
+	const { common, palette } = theme;
+	const { primary, secondary } = palette;
 
 	let totalPrice = 0;
 
@@ -17,8 +22,9 @@ const Cart = () => {
 	}
 
 	return (
-		<>
-			<button
+		<Box>
+			<Button
+				sx={{ backgroundColor: secondary.main }}
 				type="button"
 				className="btn btn-info"
 				data-bs-toggle="modal"
@@ -30,7 +36,7 @@ const Cart = () => {
 				<span className="badge rounded-pill bg-info text-dark">
 					{cart.value}
 				</span>
-			</button>
+			</Button>
 
 			{/* Modal */}
 			<div
@@ -144,7 +150,7 @@ const Cart = () => {
 					</div>
 				</div>
 			</div>
-		</>
+		</Box>
 	);
 };
 
