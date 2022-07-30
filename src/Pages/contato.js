@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
-import { Grid, Button, TextField } from "@mui/material";
+import {
+	Box,
+	Grid,
+	Button,
+	TextField,
+	Card,
+	CardContent,
+	Typography,
+} from "@mui/material";
+import { http } from "config/api";
+import { useTheme } from "@emotion/react";
 
 const Contatos = () => {
-	const url = "http://localhost:5000/message";
-	const [message, setMessage] = useState([]);
-	const [author, setAuthor] = useState("");
+	const { palette, spacing } = useTheme();
+	const { primary, secondary } = palette;
+	const [messages, setMessages] = useState([]);
+	const [email, setEmail] = useState("");
 	const [content, setContent] = useState("");
 	const [validator, setValidator] = useState(false);
 	const [render, setRender] = useState(false);
@@ -12,69 +23,76 @@ const Contatos = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch(url);
-			const json = await data.json();
-			setMessage(json);
+			const res = await http("/message");
+			console.log(res);
+			setMessages(res);
 		};
 		fetchData().catch((error) => console.log(error));
-	}, [render]);
+	}, []);
 
-	const sendMessage = () => {
+	const sendMessage = async () => {
 		setValidator(false);
-		if (author.length <= 0 || content.length <= 0) {
+
+		if (email.length <= 0 || content.length <= 0) {
 			return setValidator(!validator);
 		}
-		const bodyForm = {
-			email: author,
-			message: content,
-		};
 
-		fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(bodyForm),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data.id) {
+		await http
+			.post("/message", {
+				email,
+				content,
+			})
+			.then((res) => {
+				console.log(res.data);
+				/**
+				if (res.data) {
 					setRender(true);
 					setSuccess(true);
 					setTimeout(() => {
 						setSuccess(false);
-					}, 5000);
+					}, 3000);
 				}
+				*/
 			});
 
-		setAuthor("");
-		setContent("");
-
-		console.log(content);
+		// setEmail("");
+		// setContent("");
 	};
 
 	return (
-		<>
-			<Grid container direction="row" xs={12}>
+		<Box sx={{ display: "flex", flexDirection: "column", gap: spacing(2) }}>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: spacing(2),
+					margin: spacing(2),
+				}}
+			>
 				<TextField
-					id="name"
-					label="Name"
-					value={author}
+					id="email"
+					label="email"
+					value={email}
 					onChange={(event) => {
-						setAuthor(event.target.value);
+						setEmail(event.target.value);
 					}}
 					fullWidth
+					size="small"
 				/>
 				<TextField
 					id="message"
-					label="Message"
+					label="message"
 					value={content}
 					onChange={(event) => {
 						setContent(event.target.value);
 					}}
 					fullWidth
+					size="small"
 				/>
-			</Grid>
+				<Button onClick={sendMessage} variant="contained" color="primary">
+					enviar
+				</Button>
+			</Box>
 
 			{validator && (
 				<div
@@ -82,12 +100,12 @@ const Contatos = () => {
 					role="alert"
 				>
 					<strong>Por favor preencha todos os campos!</strong>
-					<button
+					<Button
 						type="button"
 						className="btn-close"
 						data-bs-dismiss="alert"
 						aria-label="Close"
-					></button>
+					></Button>
 				</div>
 			)}
 
@@ -100,29 +118,30 @@ const Contatos = () => {
 				</div>
 			)}
 
-			<Button
-				onClick={sendMessage}
-				className="mt-2"
-				variant="contained"
-				color="primary"
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: spacing(2),
+					margin: spacing(2),
+				}}
 			>
-				Sent
-			</Button>
-
-			{message.map((content) => {
-				return (
-					<div className="card mt-2" key={content.id}>
-						<div className="card-body">
-							<h5 className="card-title">{content.email}</h5>
-							<p className="card-text">{content.message}</p>
-							<p className="card-text">
-								<small className="text-muted">{content.created_at}</small>
-							</p>
-						</div>
-					</div>
-				);
-			})}
-		</>
+				{messages &&
+					messages.map((message) => {
+						return (
+							<Card>
+								<CardContent>
+									<Typography>{message.email}</Typography>
+									<p>{message.message}</p>
+									<p>
+										<small className="text-muted">{message.created_at}</small>
+									</p>
+								</CardContent>
+							</Card>
+						);
+					})}
+			</Box>
+		</Box>
 	);
 };
 
