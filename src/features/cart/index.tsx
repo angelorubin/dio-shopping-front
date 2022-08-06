@@ -1,21 +1,22 @@
-import React from "react";
-import { Box, Badge, useTheme } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import cartActions from "components/store/actions/cart";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { Icon } from "components/icon";
-
 const Cart = () => {
-	const cart = useSelector((state) => state.cart);
+	/**
+	const [cart, setCart] = useState([{}]);
+
+
+	const { cart, products, value } = useSelector(
+		(state: RootStateOrAny) => state.cart
+	);
 	const dispatch = useDispatch();
+	
+
 	const theme = useTheme();
 	const { palette, spacing } = theme;
 	const { common, primary, secondary } = palette;
 
 	let totalPrice = 0;
 
-	for (let i = 0; i < cart.Cart.length; i++) {
-		totalPrice += cart.Cart[i].price * cart.Cart[i].quantity;
+	for (let i = 0; i < cart.length; i++) {
+		totalPrice += cart[i].price * cart[i].quantity;
 	}
 
 	if (cart.value > 0) {
@@ -27,7 +28,7 @@ const Cart = () => {
 			<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
 				<Badge
 					color="success"
-					badgeContent={cart.value}
+					badgeContent={""}
 					data-bs-toggle="modal"
 					data-bs-target="#CartModal"
 				>
@@ -37,7 +38,6 @@ const Cart = () => {
 				</Badge>
 			</Box>
 
-			{/* Modal */}
 			<Box
 				className="modal fade"
 				id="CartModal"
@@ -75,13 +75,14 @@ const Cart = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{cart.Cart.map((item) => {
+									{cart.map((item: string) => {
 										return (
 											<tr key={item.id}>
 												<th>
 													<button
-														onClick={() =>
-															dispatch(cartActions.DeleteItem(cart, item))
+														onClick={
+															() => {}
+															// dispatch(cartActions.DeleteItem(cart, item))
 														}
 														className="badge bg-danger"
 													>
@@ -101,11 +102,12 @@ const Cart = () => {
 														{item.quantity}
 													</span>
 												</th>
-												<th>R$ {item.price.toFixed(2)}</th>
+												<th>R$ {item.price}</th>
 												<th>
 													<button
-														onClick={() =>
-															dispatch(cartActions.AddItem(cart, item))
+														onClick={
+															() => {}
+															// dispatch(cartActions.AddItem(cart, item))
 														}
 														className="badge badge-pill bg-primary"
 													>
@@ -114,8 +116,9 @@ const Cart = () => {
 												</th>
 												<th>
 													<button
-														onClick={() =>
-															dispatch(cartActions.RemoveItem(cart, item))
+														onClick={
+															() => {}
+															// dispatch(cartActions.RemoveItem(cart, item))
 														}
 														className="badge badge-pill bg-danger"
 													>
@@ -131,7 +134,7 @@ const Cart = () => {
 											Total
 										</th>
 										<th colSpan="3">{cart.value} itens</th>
-										<th colSpan="2">R$ {totalPrice.toFixed(2)}</th>
+										<th colSpan="2">R$ {""}</th>
 									</tr>
 								</tbody>
 							</table>
@@ -151,6 +154,8 @@ const Cart = () => {
 			</Box>
 		</>
 	);
+	*/
+	return <>Cart</>;
 };
 
 export default Cart;

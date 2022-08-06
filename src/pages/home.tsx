@@ -1,14 +1,13 @@
-import React from "react";
-import { Provider, useSelector } from "react-redux";
-import { Paper, Box, Typography, List, useTheme, Stack } from "@mui/material";
-import Item from "components/item";
-import Card from "components/card";
+import { Typography } from "@mui/material";
 
 const Home = () => {
+	return <Typography>Home</Typography>;
+	/**
+	const { products } = useSelector((state) => state.products);
 	const theme = useTheme();
 	const { palette, spacing } = theme;
-
-	const products = useSelector((state) => state.products);
+	const [products, setProducts] = useState([{}]);
+	const products = useGetAllMessagesQuery();
 
 	const getCategoryNames = (products) => {
 		const names = products.map((product) => product.name_categorys);
@@ -18,6 +17,18 @@ const Home = () => {
 		return uniq;
 	};
 
+	const arrayCategory = products.map((category) => category.name);
+
+	let count = {};
+
+	for (let i = 0; i < arrayCategory.length; i++) {
+		{
+			let key = arrayCategory[i];
+			count[key] = count[key] ? count[key] + 1 : 1;
+		}
+	}
+
+	
 	const categories = products.map((category) => {
 		const container = {};
 		container["id"] = category.id_categories;
@@ -32,17 +43,6 @@ const Home = () => {
 		})
 		.map(JSON.parse);
 
-	const arrayCategory = products.map((category) => category.name);
-
-	let count = {};
-
-	for (let i = 0; i < arrayCategory.length; i++) {
-		{
-			let key = arrayCategory[i];
-			count[key] = count[key] ? count[key] + 1 : 1;
-		}
-	}
-
 	return (
 		<Box
 			sx={{
@@ -53,6 +53,7 @@ const Home = () => {
 			<Box
 				sx={{
 					display: "flex",
+					width: "20%",
 					flexDirection: "column",
 					padding: spacing(2),
 				}}
@@ -72,30 +73,18 @@ const Home = () => {
 			<Box
 				sx={{
 					display: "flex",
-					gap: "1rem",
+					flex: 1,
 					flexFlow: "row wrap",
-					padding: spacing(2),
+					marginTop: spacing(2),
+					gap: spacing(10),
+					border: "2px solid red",
 				}}
 			>
-				<Box
-					sx={{
-						display: "flex",
-						flexFlow: "row wrap",
-						marginTop: spacing(2),
-						gap: spacing(10),
-					}}
-				>
-					{products.map((item) => {
-						return (
-							<Card key={item.id_product} product={item}>
-								{item.name_product}
-							</Card>
-						);
-					})}
-				</Box>
+				<Typography>Produtos Componente</Typography>
 			</Box>
 		</Box>
 	);
+	*/
 };
 
 export default Home;

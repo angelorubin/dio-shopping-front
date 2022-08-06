@@ -1,17 +1,15 @@
 import React from "react";
-import { Paper, Typography, Button, Box, useTheme } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import cartActions from "components/store/actions/cart";
+import cartActions from "store/actions/cart";
 
-export default ({ product, children }) => {
+const Card = ({ product, children }) => {
 	const cart = useSelector((state) => state.cart.value);
 	const dispatch = useDispatch();
-	const theme = useTheme();
-	const { palette, spacing } = theme;
+	// const theme = useTheme();
+	// const { palette, spacing } = theme;
 
-	const handleClick = () => {
-		return dispatch(cartActions.Add(cart, product));
-	};
+	const handleClick = () => dispatch(cartActions.Add(cart, product));
 
 	return (
 		<Box
@@ -49,3 +47,5 @@ export default ({ product, children }) => {
 		</Box>
 	);
 };
+
+export default Card;

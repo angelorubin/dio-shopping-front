@@ -1,13 +1,13 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "pages/home";
-import Contatos from "pages/contato";
+import Home from "pages/home";
+import Contact from "pages/contact";
 
 const MainRoutes = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<HomePage />} />
-			<Route path="/contato" element={<Contatos />} />
+			<Route path="*" element={<h1>Page not found.</h1>} />
+			<Route path="/home" element={<Home />} />
+			<Route index path="/" element={<Contact />} />
 		</Routes>
 	);
 };

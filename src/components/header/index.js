@@ -1,8 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Typography, Button, Link as MuiLink } from "@mui/material";
-import Cart from "./cart";
-import { useTheme } from "@emotion/react";
+import { Box, Typography, Link as MuiLink, useTheme } from "@mui/material";
+import Cart from "../../features/cart";
 
 const Header = () => {
 	const theme = useTheme();
