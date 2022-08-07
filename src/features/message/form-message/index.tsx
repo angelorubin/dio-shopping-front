@@ -1,27 +1,38 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const FormMessage = () => {
 	const { palette, spacing } = useTheme();
 	const { primary, secondary } = palette;
 
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm();
+	const validationSchema = yup.object({
+		email: yup.string()
+			.email('enter a valid email')
+			.required('email is required'),
+		message: yup.string()
+			.required('message is required'),
+	})
 
-	const onSubmit = (data: any) => {
-		console.log(data);
-	};
+	const { handleSubmit, handleChange, values, errors, touched } = useFormik({
+		initialValues: {
+			email: '',
+			message: '',
+		},
+		validationSchema,
+		onSubmit: values => {
+			console.log(JSON.stringify(values, null, 2));
+		},
+	});
+
+
 
 	return (
 		<Box
 			component="form"
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={handleSubmit}
 			sx={{
 				display: "flex",
 				flexDirection: "column",
@@ -30,19 +41,26 @@ const FormMessage = () => {
 			}}
 		>
 			<TextField
-				error={errors.email && true}
+				id="email"
+				name="email"
 				fullWidth
 				size="small"
-				{...register("email", { required: true })}
-				helperText={errors.email && "e-mail is required"}
+				type="text"
+				onChange={handleChange}
+				error={touched.email && Boolean(errors.email)}
+				helperText={touched.email && errors.email}
+
 			/>
 
 			<TextField
-				error={errors.message && true}
+				id="message"
+				name="message"
 				fullWidth
 				size="small"
-				{...register("message", { required: true })}
-				helperText={errors.message && "message is required"}
+				type="text"
+				onChange={handleChange}
+				error={touched.message && Boolean(errors.message)}
+				helperText={touched.message && errors.message}
 			/>
 
 			<Button type="submit" variant="contained" color="primary">
