@@ -12,6 +12,14 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { x, getMessages } from "features/message/slice";
 import FormMessage from "features/message/form-message";
 
+interface IMessage {
+	id: string
+	email: string,
+	message: string,
+	created_at: string
+
+}
+
 const Messages = () => {
 	const { data, isLoading, status } = useAppSelector((state) => state.messages);
 	const dispatch = useAppDispatch();
@@ -27,9 +35,6 @@ const Messages = () => {
 		<Box sx={{ display: "flex", flexDirection: "column", gap: spacing(2) }}>
 			<FormMessage />
 
-			<pre>{JSON.stringify(isLoading, null, 4)}</pre>
-			<pre>{JSON.stringify(status, null, 4)}</pre>
-
 			<Box
 				sx={{
 					display: "flex",
@@ -38,7 +43,7 @@ const Messages = () => {
 					margin: spacing(2),
 				}}
 			>
-				{data && data.map((message: any, index: any) => {
+				{data && data.map((message: IMessage, index) => {
 					return (
 						<Card key={message.id}>
 							<CardContent>

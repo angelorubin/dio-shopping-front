@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import messagesReducer from "features/message/slice";
+import formMessageReducer from "features/message/form-message/slice";
 
 export const store = configureStore({
-	reducer: { messages: messagesReducer },
+  reducer: {
+    messages: messagesReducer,
+    formMessage: formMessageReducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
