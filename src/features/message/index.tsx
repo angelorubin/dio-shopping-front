@@ -13,7 +13,7 @@ import { x, getMessages } from "features/message/slice";
 import FormMessage from "features/message/form-message";
 
 const Messages = () => {
-	const { data } = useAppSelector((state) => state.messages);
+	const { data, isLoading, status } = useAppSelector((state) => state.messages);
 	const dispatch = useAppDispatch();
 	const { palette, spacing } = useTheme();
 	const { primary, secondary } = palette;
@@ -21,13 +21,14 @@ const Messages = () => {
 
 	useEffect(() => {
 		dispatch(getMessages());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", gap: spacing(2) }}>
 			<FormMessage />
 
-			<pre>{JSON.stringify(data)}</pre>
+			<pre>{JSON.stringify(isLoading, null, 4)}</pre>
+			<pre>{JSON.stringify(status, null, 4)}</pre>
 
 			<Box
 				sx={{
@@ -37,14 +38,7 @@ const Messages = () => {
 					margin: spacing(2),
 				}}
 			>
-				{[
-					{
-						id: 1,
-						email: "angelorubin@gmail.com",
-						message: "test redux toolkit counter",
-						created_at: "05/08/2022",
-					},
-				].map((message: any, index: any) => {
+				{data && data.map((message: any, index: any) => {
 					return (
 						<Card key={message.id}>
 							<CardContent>
