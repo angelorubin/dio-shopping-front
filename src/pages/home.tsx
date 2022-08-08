@@ -1,7 +1,8 @@
 import { Typography } from "@mui/material";
+import Header from "components/header"
 
 const Home = () => {
-	return <Typography>Home</Typography>;
+	return <><Header /></>
 	/**
 	const { products } = useSelector((state) => state.products);
 	const theme = useTheme();
@@ -28,7 +29,7 @@ const Home = () => {
 		}
 	}
 
-	
+
 	const categories = products.map((category) => {
 		const container = {};
 		container["id"] = category.id_categories;
