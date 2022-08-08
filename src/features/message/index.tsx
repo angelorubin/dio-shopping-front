@@ -19,11 +19,10 @@ interface IMessage {
 }
 
 const Messages = () => {
-	const { data, isLoading, status } = useAppSelector((state) => state.messages);
+	const { data, isLoading } = useAppSelector((state) => state.messages);
 	const dispatch = useAppDispatch();
-	const { palette, spacing, zIndex } = useTheme();
-	const { primary, secondary } = palette;
-	const [open, setOpen] = useState(false);
+	const { spacing } = useTheme();
+
 
 	useEffect(() => {
 		dispatch(getMessages());

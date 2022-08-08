@@ -1,14 +1,12 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useAppDispatch } from "store/hooks";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { createMessage } from "features/message/form-message/slice"
 import { getMessages } from "features/message/slice";
 
 const FormMessage = () => {
-	const { palette, spacing } = useTheme();
-	const { primary, secondary } = palette;
-	const { data, status, isLoading } = useAppSelector(state => state.formMessage)
+	const { spacing } = useTheme();
 	const dispatch = useAppDispatch()
 
 	const validationSchema = yup.object({
@@ -30,7 +28,7 @@ const FormMessage = () => {
 		onSubmit: values => {
 			dispatch(createMessage(values));
 			dispatch(getMessages())
-			resetForm({ values })
+			resetForm({ values: { email: "", message: "" } })
 		},
 	});
 
@@ -46,6 +44,7 @@ const FormMessage = () => {
 			}}
 		>
 			<TextField
+				value={values.email || ''}
 				id="email"
 				name="email"
 				fullWidth
@@ -58,6 +57,7 @@ const FormMessage = () => {
 			/>
 
 			<TextField
+				value={values.message || ''}
 				id="message"
 				name="message"
 				fullWidth

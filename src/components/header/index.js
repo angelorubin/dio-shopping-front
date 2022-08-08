@@ -6,7 +6,7 @@ import Cart from "../../features/cart";
 const Header = () => {
   const theme = useTheme();
   const { palette, spacing } = theme;
-  const { common, primary, secondary } = palette;
+  const { common, primary } = palette;
 
   return (
     <Box
