@@ -3,29 +3,27 @@ import {
 	Box,
 	Card,
 	CardContent,
-	CircularProgress,
-	Button,
 	Typography,
 	useTheme,
 } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { x, getMessages } from "features/message/slice";
+import { getMessages } from "features/message/slice";
 import FormMessage from "features/message/form-message";
+import Loading from "components/loading"
 
 interface IMessage {
 	id: string
 	email: string,
 	message: string,
 	created_at: string
-
 }
 
 const Messages = () => {
 	const { data, isLoading, status } = useAppSelector((state) => state.messages);
 	const dispatch = useAppDispatch();
-	const { palette, spacing } = useTheme();
+	const { palette, spacing, zIndex } = useTheme();
 	const { primary, secondary } = palette;
-	const [alert, setAlert] = useState(false);
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		dispatch(getMessages());
@@ -43,7 +41,7 @@ const Messages = () => {
 					margin: spacing(2),
 				}}
 			>
-				{data && data.map((message: IMessage, index) => {
+				{isLoading ? <Loading /> : data && data.map((message: IMessage, index) => {
 					return (
 						<Card key={message.id}>
 							<CardContent>
@@ -58,6 +56,7 @@ const Messages = () => {
 				})}
 			</Box>
 		</Box>
+
 	);
 };
 
