@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import http from "axios";
+import { http } from "config/api";
 
 export interface MessagesState {
   data: [];
@@ -10,7 +10,7 @@ export interface MessagesState {
 export const getMessages = createAsyncThunk(
   "messages/getMessages",
   async () => {
-    const response = await http("http://localhost:5000/messages");
+    const response = await http("/messages");
     return response.data;
   }
 );
@@ -24,11 +24,7 @@ const initialState: MessagesState = {
 export const messagesSlice = createSlice({
   name: "messages",
   initialState,
-  reducers: {
-    x: (state, action: PayloadAction<string>) => {
-      return state;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(getMessages.pending, (state, action) => {
       state.status = "pending";
@@ -43,6 +39,6 @@ export const messagesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { x } = messagesSlice.actions;
+export const {} = messagesSlice.actions;
 
 export default messagesSlice.reducer;
