@@ -1,8 +1,7 @@
-import { Typography } from "@mui/material";
-import Header from "components/header"
+import Header from "components/header";
 
 const Home = () => {
-	return <><Header /></>
+	return <Header />;
 	/**
 	const { products } = useSelector((state) => state.products);
 	const theme = useTheme();
