@@ -3,13 +3,13 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { createMessage } from "features/message/form-message/slice"
+import { getMessages } from "features/message/slice";
 
 const FormMessage = () => {
 	const { palette, spacing } = useTheme();
 	const { primary, secondary } = palette;
 	const { data, status, isLoading } = useAppSelector(state => state.formMessage)
 	const dispatch = useAppDispatch()
-
 
 	const validationSchema = yup.object({
 		email: yup.string()
@@ -19,16 +19,18 @@ const FormMessage = () => {
 			.required('message is required'),
 	})
 
-	const { handleSubmit, handleChange, values, errors, touched } = useFormik({
-		initialValues: {
-			email: '',
-			message: '',
-		},
+	const getInitialValues = () => ({
+		email: "",
+		message: "",
+	})
+
+	const { handleSubmit, handleChange, values, errors, touched, resetForm } = useFormik({
+		initialValues: getInitialValues(),
 		validationSchema,
 		onSubmit: values => {
-			console.log(JSON.stringify(values, null, 2));
-			// const { email, message } = values;
-			return dispatch(createMessage(values));
+			dispatch(createMessage(values));
+			dispatch(getMessages())
+			resetForm({ values })
 		},
 	});
 
@@ -43,9 +45,6 @@ const FormMessage = () => {
 				margin: spacing(2),
 			}}
 		>
-			<pre>{JSON.stringify(isLoading, null, 4)}</pre>
-			<pre>{JSON.stringify(status, null, 4)}</pre>
-
 			<TextField
 				id="email"
 				name="email"
